@@ -9,26 +9,26 @@ public class Customer{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int custumerId;
+    private int customerId;
 
-    private String mobileNo;
+    private String mobile;
 
     private String password;
 
     public int getCustumerId() {
-        return custumerId;
+        return customerId;
     }
 
     public void setCustumerId(int custumerId) {
-        this.custumerId = custumerId;
+        this.customerId = custumerId;
     }
 
     public String getMobileNo() {
-        return mobileNo;
+        return mobile;
     }
 
     public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+        this.mobile = mobileNo;
     }
 
     public String getPassword() {

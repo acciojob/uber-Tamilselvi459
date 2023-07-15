@@ -11,7 +11,7 @@ public class Driver{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
 
-    private String mobileNo;
+    private String mobile;
 
     private String password;
 
@@ -23,12 +23,12 @@ public class Driver{
         this.driverId = driverId;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
+    public String getMobile() {
+        return mobile;
     }
 
     public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+        this.mobile = mobile;
     }
 
     public String getPassword() {
