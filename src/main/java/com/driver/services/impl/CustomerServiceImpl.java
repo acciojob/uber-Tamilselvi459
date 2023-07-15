@@ -86,8 +86,10 @@ public class CustomerServiceImpl implements CustomerService {
 	 if(optionalcustomer.isPresent()){
 		 Customer cus = optionalcustomer.get();
 		 cus.getTripBookingList().add(tripBooking1);
+		 return tripBooking1;
  }
-	 return tripBooking1;
+	 return null;
+
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if(tripBooking.isPresent()){
 			TripBooking trip = tripBooking.get();
 			trip.setStatus(TripStatus.CANCELED);
-			tripBookingRepository2.delete(trip);
+			tripBookingRepository2.save(trip);
 
 		}
 
