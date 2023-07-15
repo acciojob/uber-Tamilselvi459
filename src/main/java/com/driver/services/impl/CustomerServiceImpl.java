@@ -61,35 +61,34 @@ public class CustomerServiceImpl implements CustomerService {
 		List<Driver> list = driverRepository2.findAll();
 		boolean flag = false;
 		int num = Integer.MAX_VALUE;
+		Driver d = null;
 		int price = 1;
 		for(Driver driver : list){
 			if(driver.getDriverId()<num && driver.getCab().getAvailable() == true)  {
 				num = driver.getDriverId();
 				driver.getCab().setAvailable(false);
 				price = driver.getCab().getPerKmRate();
+				d = driver;
 				flag = true;
 
 			}
 		}
 		if(flag==false) throw new Exception("No cab available!");
+
      TripBooking tripBooking = new TripBooking();
 	 tripBooking.setFromLocation(fromLocation);
 	 tripBooking.setToLocation(toLocation);
 	 tripBooking.setDistanceInKm(distanceInKm);
 	 tripBooking.setStatus(TripStatus.CONFIRMED);
 	 tripBooking.setBill(distanceInKm*price);
+	 tripBooking.setCustomer(customer);
+	 tripBooking.setDriver(d);
+	 d.getTripBookingList().add(tripBooking);
+	 customer.getTripBookingList().add(tripBooking);
 
 
- 	 TripBooking tripBooking1 = tripBookingRepository2.save(tripBooking);
 
-		Optional<Customer> optionalcustomer = customerRepository2.findById(customerId);
-	 if(optionalcustomer.isPresent()){
-		 Customer cus = optionalcustomer.get();
-		 cus.getTripBookingList().add(tripBooking1);
-		 return tripBooking1;
- }
-	 return null;
-
+		 return tripBooking;
 	}
 
 	@Override
@@ -99,6 +98,8 @@ public class CustomerServiceImpl implements CustomerService {
 		if(tripBooking.isPresent()){
 			TripBooking trip = tripBooking.get();
 			trip.setStatus(TripStatus.CANCELED);
+			trip.setBill(0);
+			trip.getDriver().getCab().setAvailable(true);
 			tripBookingRepository2.save(trip);
 
 		}
