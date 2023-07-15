@@ -48,20 +48,27 @@ public class CustomerServiceImpl implements CustomerService {
 	public TripBooking bookTrip(int customerId, String fromLocation, String toLocation, int distanceInKm) throws Exception{
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
-
-//		Optional<Customer> optionalCustomer = customerRepository2.findById(customerId);
+//
+		Customer customer = customerRepository2.findById(customerId).get();
 //		if(optionalCustomer.isPresent()){
+//
+//			TripBooking tripBooking = new TripBooking();
+//			tripBooking.setToLocation(toLocation);
+//			tripBooking.setFromLocation(fromLocation);
+//			tripBooking.setDistanceInKm(distanceInKm);
 //
 //		}
 		List<Driver> list = driverRepository2.findAll();
 		boolean flag = false;
 		int num = Integer.MAX_VALUE;
+		int price = 1;
 		for(Driver driver : list){
-			if(driver.getDriverId()<num && driver.getCab().getAvailable())  {
+			if(driver.getDriverId()<num && driver.getCab().getAvailable() == true)  {
 				num = driver.getDriverId();
 				driver.getCab().setAvailable(false);
+				price = driver.getCab().getPerKmRate();
 				flag = true;
-				break;
+
 			}
 		}
 		if(flag==false) throw new Exception("No cab available!");
@@ -70,15 +77,15 @@ public class CustomerServiceImpl implements CustomerService {
 	 tripBooking.setToLocation(toLocation);
 	 tripBooking.setDistanceInKm(distanceInKm);
 	 tripBooking.setStatus(TripStatus.CONFIRMED);
-	 tripBooking.setBill(distanceInKm*10);
+	 tripBooking.setBill(distanceInKm*price);
 
 
  	 TripBooking tripBooking1 = tripBookingRepository2.save(tripBooking);
 
 		Optional<Customer> optionalcustomer = customerRepository2.findById(customerId);
 	 if(optionalcustomer.isPresent()){
-		 Customer customer = optionalcustomer.get();
-		 customer.getTripBookingList().add(tripBooking1);
+		 Customer cus = optionalcustomer.get();
+		 cus.getTripBookingList().add(tripBooking1);
  }
 	 return tripBooking1;
 	}
@@ -90,7 +97,8 @@ public class CustomerServiceImpl implements CustomerService {
 		if(tripBooking.isPresent()){
 			TripBooking trip = tripBooking.get();
 			trip.setStatus(TripStatus.CANCELED);
-			tripBookingRepository2.save(trip);
+			tripBookingRepository2.delete(trip);
+
 		}
 
 	}
