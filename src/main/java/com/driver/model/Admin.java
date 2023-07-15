@@ -6,15 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Admin{
+public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int adminId;
+    private int adminId;
 
-   private String username;
-
-  private  String password;
+    private String username;
+    private String password;
 
     public int getAdminId() {
         return adminId;
@@ -23,7 +22,6 @@ public class Admin{
     public void setAdminId(int adminId) {
         this.adminId = adminId;
     }
-
 
     public String getUsername() {
         return username;
@@ -41,3 +39,4 @@ public class Admin{
         this.password = password;
     }
 }
+

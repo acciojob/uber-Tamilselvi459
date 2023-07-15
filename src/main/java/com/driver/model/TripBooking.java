@@ -20,31 +20,15 @@ public class TripBooking{
     @Enumerated(value = EnumType.STRING)
     private TripStatus status;
 
-    public TripStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TripStatus status) {
-        this.status = status;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
 
 
+    @ManyToOne
+    @JoinColumn
+    Customer customer;
+
+    @ManyToOne
+    @JoinColumn
+    Driver driver;
 
     public int getTripBookingId() {
         return tripBookingId;
@@ -86,11 +70,27 @@ public class TripBooking{
         this.bill = bill;
     }
 
-    @ManyToOne
-    @JoinColumn
-    Customer customer;
+    public TripStatus getStatus() {
+        return status;
+    }
 
-    @ManyToOne
-    @JoinColumn
-    Driver driver;
+    public void setStatus(TripStatus status) {
+        this.status = status;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 }

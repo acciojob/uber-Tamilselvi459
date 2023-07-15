@@ -14,21 +14,24 @@ public class Customer{
     private String mobile;
 
     private String password;
+    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
+    List<TripBooking> tripBookingList = new ArrayList<>();
 
-    public int getCustumerId() {
+
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustumerId(int custumerId) {
-        this.customerId = custumerId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public String getMobileNo() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobile = mobileNo;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getPassword() {
@@ -38,10 +41,6 @@ public class Customer{
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
-    List<TripBooking> tripBookingList = new ArrayList<>();
-
 
     public List<TripBooking> getTripBookingList() {
         return tripBookingList;

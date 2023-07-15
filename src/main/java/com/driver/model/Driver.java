@@ -15,6 +15,13 @@ public class Driver{
 
     private String password;
 
+
+    @OneToOne(mappedBy = "driver" , cascade = CascadeType.ALL)
+    Cab cab;
+
+    @OneToMany(mappedBy = "driver" , cascade = CascadeType.ALL)
+    List<TripBooking> tripBookingList = new ArrayList<>();
+
     public int getDriverId() {
         return driverId;
     }
@@ -27,7 +34,7 @@ public class Driver{
         return mobile;
     }
 
-    public void setMobileNo(String mobileNo) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
@@ -39,9 +46,6 @@ public class Driver{
         this.password = password;
     }
 
-    @OneToOne(mappedBy = "driver" , cascade = CascadeType.ALL)
-    Cab cab;
-
     public Cab getCab() {
         return cab;
     }
@@ -50,6 +54,11 @@ public class Driver{
         this.cab = cab;
     }
 
-    @OneToMany(mappedBy = "driver" , cascade = CascadeType.ALL)
-    List<TripBooking> tripBookingList = new ArrayList<>();
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
+    }
+
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
+    }
 }
